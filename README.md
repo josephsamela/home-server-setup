@@ -70,3 +70,8 @@ This is a nginx file browser for the media files in `/share/Library`. The browse
 ### `sandbox`
 
 This is an "always-running" container of Ubuntu that can be ssh'd into for network testing.
+
+
+### `transmission`
+
+A webclient for `transmission` to manage torrents. Downloads are mapped to `/share/temp`.
