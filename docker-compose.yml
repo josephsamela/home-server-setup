@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+
+    bastion:
+        image: nginx
+        ports:
+            - "80"
+            - "443"
+        environment:
+            - NGINX_HOST=samela.io
+            - NGINX_PORT=80
+
+    plex:
+        container_name: plex
+        image: plexinc/pms-docker
+        network_mode: host
+        restart: always
+        environment:
+            - TZ="America/Boston"
+        volumes:
+            - /share/Library:/data
+
+    samba:
+        build: './containers/samba'
+
+    sandbox:
+        image: ubuntu:latest
+        ports: 
+            - "5000-5999"
+
+    transmission:
+        image: gists/transmission
+        ports:
+            - "8080:9091"
+            - "51413:51413"
+        volumes:
+            - /share/temp:/data
+        restart: always
