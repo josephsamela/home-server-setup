@@ -21,8 +21,8 @@ services:
         volumes:
             - /share/Library:/data
 
-    samba:
-        build: './containers/samba'
+              #    samba:
+              #build: './containers/samba'
 
     sandbox:
         image: ubuntu:latest
