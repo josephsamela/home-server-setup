@@ -4,6 +4,7 @@ services:
 
     bastion:
         image: nginx
+        container_name: bastion
         ports:
             - "80"
             - "443"
@@ -12,28 +13,57 @@ services:
             - NGINX_PORT=80
 
     plex:
-        container_name: plex
         image: plexinc/pms-docker
+        container_name: plex
         network_mode: host
         restart: always
         environment:
             - TZ="America/Boston"
+        devices:
+            - /dev/dri:/dev/dri
         volumes:
-            - /share/Library:/data
+            - /share/Library:/data:ro
 
-              #    samba:
-              #build: './containers/samba'
+    samba:
+        image: joebiellik/samba-server
+        volumes:
+            - ./smb.conf:/etc/samba/smb.conf
+            - /share:/mnt/share
+        ports:
+            - "137:137/udp"
+            - "138:138/udp"
+            - "139:139/tcp"
+            - "445:445/tcp"
+        environment:
+            - USERNAME=joe
+            - PASSWORD=samba
 
     sandbox:
         image: ubuntu:latest
-        ports: 
-            - "5000-5999"
+        container_name: sandbox
+        network_mode: macvlan
+        networks:
+            ipv4_address: 192.168.1.25
 
     transmission:
         image: gists/transmission
+        container_name: transmission
         ports:
             - "8080:9091"
             - "51413:51413"
         volumes:
             - /share/temp:/data
         restart: always
+
+    shinobi:
+        image: shinobisystems/shinobi:latest-ubuntu
+        container_name: shinobi
+        ports: "8080:8080/tcp"
+        environment: 
+            - APP_BRANCH=dev
+        volumes: 
+            - /dev/shm/shinobiStreams:/dev/shm/streams:rw
+            - v $HOME/shinobiConfig:/config:rw
+            - v $HOME/shinobiCustomAutoLoad:/customAutoLoad:rw
+            - v $HOME/shinobiDatabase:/var/lib/mysql:rw
+            - v $HOME/shinobiVideos:/opt/shinobi/videos:rw
