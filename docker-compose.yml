@@ -1,16 +1,15 @@
 version: "3"
 
 networks:
-    private:
     macvlan:
         driver: macvlan
         driver_opts:
             parent: eth0
         ipam:
             config:
-                - subnet: 192.168.1.0/24
-                - gateway: 192.168.1.254
-                - ip_range: 192.168.1.254
+                - subnet: 172.19.199.1/16
+                  #                gateway: 192.168.1.254
+                  #                ip_range: 192.168.1.254
 
 services:
     bastion:
@@ -52,9 +51,10 @@ services:
     sandbox:
         image: ubuntu:latest
         container_name: sandbox
-        network_mode: macvlan
+        #        network_mode: macvlan
         networks:
-            ipv4_address: 192.168.1.25
+            macvlan:
+                ipv4_address: 192.168.1.25
 
     transmission:
         image: gists/transmission
@@ -69,7 +69,8 @@ services:
     shinobi:
         image: shinobisystems/shinobi:latest-ubuntu
         container_name: shinobi
-        ports: "8080:8080/tcp"
+        ports: 
+            - "8080:8080/tcp"
         environment:
             - APP_BRANCH=dev
         volumes:
