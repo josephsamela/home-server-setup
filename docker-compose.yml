@@ -1,7 +1,18 @@
-version: '3'
+version: "3"
+
+networks:
+    private:
+    macvlan:
+        driver: macvlan
+        driver_opts:
+            parent: eth0
+        ipam:
+            config:
+                - subnet: 192.168.1.0/24
+                - gateway: 192.168.1.254
+                - ip_range: 192.168.1.254
 
 services:
-
     bastion:
         image: nginx
         container_name: bastion
@@ -49,7 +60,7 @@ services:
         image: gists/transmission
         container_name: transmission
         ports:
-            - "8080:9091"
+            - "9091:9091"
             - "51413:51413"
         volumes:
             - /share/temp:/data
@@ -59,11 +70,11 @@ services:
         image: shinobisystems/shinobi:latest-ubuntu
         container_name: shinobi
         ports: "8080:8080/tcp"
-        environment: 
+        environment:
             - APP_BRANCH=dev
-        volumes: 
+        volumes:
             - /dev/shm/shinobiStreams:/dev/shm/streams:rw
-            - v $HOME/shinobiConfig:/config:rw
-            - v $HOME/shinobiCustomAutoLoad:/customAutoLoad:rw
-            - v $HOME/shinobiDatabase:/var/lib/mysql:rw
-            - v $HOME/shinobiVideos:/opt/shinobi/videos:rw
+            - $HOME/shinobiConfig:/config:rw
+            - $HOME/shinobiCustomAutoLoad:/customAutoLoad:rw
+            - $HOME/shinobiDatabase:/var/lib/mysql:rw
+            - $HOME/shinobiVideos:/opt/shinobi/videos:rw
