@@ -8,8 +8,6 @@ networks:
         ipam:
             config:
                 - subnet: 172.19.199.1/16
-                  #                gateway: 192.168.1.254
-                  #                ip_range: 192.168.1.254
 
 services:
     bastion:
@@ -23,7 +21,7 @@ services:
             - NGINX_PORT=80
 
     plex:
-        image: plexinc/pms-docker
+        image: plexinc/pms-docker:public
         container_name: plex
         network_mode: host
         restart: always
@@ -44,17 +42,6 @@ services:
             - "138:138/udp"
             - "139:139/tcp"
             - "445:445/tcp"
-        environment:
-            - USERNAME=joe
-            - PASSWORD=samba
-
-    sandbox:
-        image: ubuntu:latest
-        container_name: sandbox
-        #        network_mode: macvlan
-        networks:
-            macvlan:
-                ipv4_address: 192.168.1.25
 
     transmission:
         image: gists/transmission

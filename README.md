@@ -67,11 +67,6 @@ This runs the smb network fileshare on the local area network. The `/share` fold
 
 This is a nginx file browser for the media files in `/share/Library`. The browser requires username/password authentication and is read-only.
 
-### `sandbox`
-
-This is an "always-running" container of Ubuntu that can be ssh'd into for network testing.
-
-
 ### `transmission`
 
 A webclient for `transmission` to manage torrents. Downloads are mapped to `/share/temp`.
