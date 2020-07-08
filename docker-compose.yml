@@ -1,14 +1,5 @@
 version: "3"
 
-networks:
-    macvlan:
-        driver: macvlan
-        driver_opts:
-            parent: eth0
-        ipam:
-            config:
-                - subnet: 172.19.199.1/16
-
 services:
     bastion:
         image: nginx
