@@ -30,6 +30,7 @@ ossyNMMMNyMMhsssssssssssssshmmmhssssssso   GPU: AMD Radeon HD 6450/7450/8450
 ```
 
 Notes
+
 * The CPU is a `i3-2120` that supports `vt-d`. Support for `vt-d` is required for virtualization. Make sure to check `vt-d` is enabled in UEFI during installation.
 * The server has three hard drives. One `256GB` SSD for the operating system. Two `8TB` SATA hard drives for bulk storage.
 
