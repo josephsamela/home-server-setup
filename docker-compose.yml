@@ -12,7 +12,7 @@ services:
             - NGINX_PORT=80
 
     plex:
-        image: plexinc/pms-docker:public
+        image: plexinc/pms-docker:plexpass
         container_name: plex
         network_mode: host
         restart: always
@@ -21,7 +21,7 @@ services:
         devices:
             - /dev/dri:/dev/dri
         volumes:
-            - /share/Library:/data:ro
+            - /share/Library:/data:rw
 
     samba:
         image: joebiellik/samba-server
