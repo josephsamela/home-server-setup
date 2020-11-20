@@ -22,24 +22,25 @@ services:
             - /dev/dri:/dev/dri
         volumes:
             - /share/Library:/data:rw
+        restart: always
 
     pihole:
         container_name: pihole
         image: pihole/pihole:latest
+        restart: always
+        environment:
+            - TZ="America/Boston"
         ports:
             - "53:53/tcp"
             - "53:53/udp"
             - "67:67/udp"
-            - "80:80/tcp"
+            - "8080:80/tcp"
             - "443:443/tcp"
-        environment:
-            TZ: "America/Chicago"
         volumes:
             - "./etc-pihole/:/etc/pihole/"
             - "./etc-dnsmasq.d/:/etc/dnsmasq.d/"
         cap_add:
             - NET_ADMIN
-        restart: unless-stopped
 
     freepbx:
         container_name: freepbx
@@ -73,6 +74,10 @@ services:
             - "138:138/udp"
             - "139:139/tcp"
             - "445:445/tcp"
+
+    dhcphelper:
+        image: joharohl/dhcp-helper
+        container_name: dhcphelper
 
     transmission:
         image: gists/transmission
