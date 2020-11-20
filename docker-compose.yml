@@ -41,6 +41,28 @@ services:
             - NET_ADMIN
         restart: unless-stopped
 
+    freepbx:
+        container_name: freepbx
+        image: tiredofit/freepbx
+        ports:
+        - 8081:80
+        - 5060:5060/udp
+        - 5160:5160/udp
+        - 18000-18100:18000-18100/udp
+        - 4445:4445
+        volumes:
+        - ./certs:/certs
+        - ./data:/data
+        - ./logs:/var/log
+        - ./data/www:/var/www/html
+        - ./db:/var/lib/mysql
+        environment: 
+        - ZABBIX_HOSTNAME=freepbx-app
+        - RTP_START=18000
+        - RTP_FINISH=18100
+        - DB_EMBEDDED=TRUE
+        restart: always
+
     samba:
         image: joebiellik/samba-server
         volumes:
