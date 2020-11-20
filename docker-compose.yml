@@ -23,6 +23,24 @@ services:
         volumes:
             - /share/Library:/data:rw
 
+    pihole:
+        container_name: pihole
+        image: pihole/pihole:latest
+        ports:
+            - "53:53/tcp"
+            - "53:53/udp"
+            - "67:67/udp"
+            - "80:80/tcp"
+            - "443:443/tcp"
+        environment:
+            TZ: "America/Chicago"
+        volumes:
+            - "./etc-pihole/:/etc/pihole/"
+            - "./etc-dnsmasq.d/:/etc/dnsmasq.d/"
+        cap_add:
+            - NET_ADMIN
+        restart: unless-stopped
+
     samba:
         image: joebiellik/samba-server
         volumes:
@@ -47,7 +65,7 @@ services:
     shinobi:
         image: shinobisystems/shinobi:latest-ubuntu
         container_name: shinobi
-        ports: 
+        ports:
             - "8080:8080/tcp"
         environment:
             - APP_BRANCH=dev
