@@ -48,6 +48,7 @@ services:
         ports:
         - 8081:80
         - 5060:5060/udp
+        - 5061:5061/udp
         - 5160:5160/udp
         - 18000-18100:18000-18100/udp
         - 4445:4445
@@ -64,6 +65,16 @@ services:
         - DB_EMBEDDED=TRUE
         restart: always
 
+    rtltcp:
+        container_name: rtltcp
+        image: kosdk/rtl-tcp
+        ports:
+            - 1234:1234
+        devices: 
+            - /dev/bus/usb/003
+        #volumes:
+        #    - /dev/bus/usb:/dev/bus/usb
+
     samba:
         image: joebiellik/samba-server
         volumes:
@@ -74,10 +85,6 @@ services:
             - "138:138/udp"
             - "139:139/tcp"
             - "445:445/tcp"
-
-    dhcphelper:
-        image: joharohl/dhcp-helper
-        container_name: dhcphelper
 
     transmission:
         image: gists/transmission
