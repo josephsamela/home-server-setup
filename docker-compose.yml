@@ -94,17 +94,3 @@ services:
             - /share/temp:/data
         restart: always
 
-    shinobi:
-        image: shinobisystems/shinobi:latest-ubuntu
-        container_name: shinobi
-        ports:
-            - "8080:8080/tcp"
-        environment:
-            - APP_BRANCH=dev
-        volumes:
-            - /dev/shm/shinobiStreams:/dev/shm/streams:rw
-            - $HOME/shinobiConfig:/config:rw
-            - $HOME/shinobiCustomAutoLoad:/customAutoLoad:rw
-            - $HOME/shinobiDatabase:/var/lib/mysql:rw
-            - $HOME/shinobiVideos:/opt/shinobi/videos:rw
-
