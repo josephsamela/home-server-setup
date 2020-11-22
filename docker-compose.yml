@@ -72,8 +72,6 @@ services:
             - 1234:1234
         devices: 
             - /dev/bus/usb/003
-        #volumes:
-        #    - /dev/bus/usb:/dev/bus/usb
 
     samba:
         image: joebiellik/samba-server
