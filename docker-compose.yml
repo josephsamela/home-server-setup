@@ -109,3 +109,4 @@ services:
             - $HOME/shinobiCustomAutoLoad:/customAutoLoad:rw
             - $HOME/shinobiDatabase:/var/lib/mysql:rw
             - $HOME/shinobiVideos:/opt/shinobi/videos:rw
+
