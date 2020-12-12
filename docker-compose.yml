@@ -42,29 +42,6 @@ services:
         cap_add:
             - NET_ADMIN
 
-    freepbx:
-        container_name: freepbx
-        image: tiredofit/freepbx
-        ports:
-        - 8081:80
-        - 5060:5060/udp
-        - 5061:5061/udp
-        - 5160:5160/udp
-        - 18000-18100:18000-18100/udp
-        - 4445:4445
-        volumes:
-        - ./certs:/certs
-        - ./data:/data
-        - ./logs:/var/log
-        - ./data/www:/var/www/html
-        - ./db:/var/lib/mysql
-        environment: 
-        - ZABBIX_HOSTNAME=freepbx-app
-        - RTP_START=18000
-        - RTP_FINISH=18100
-        - DB_EMBEDDED=TRUE
-        restart: always
-
     rtltcp:
         container_name: rtltcp
         image: kosdk/rtl-tcp
@@ -72,6 +49,7 @@ services:
             - 1234:1234
         devices: 
             - /dev/bus/usb/003
+        restart: always
 
     samba:
         image: joebiellik/samba-server
@@ -90,7 +68,21 @@ services:
         ports:
             - "9091:9091"
             - "51413:51413"
+        environment:
+            - USERNAME=admin
+            - PASSWORD=admin
         volumes:
             - /share/temp:/data
+        restart: always
+
+    minecraft:
+        image: itzg/minecraft-server
+        container_name: minecraft
+        ports: 
+            - "25565:25565"
+        volumes:
+            - "/minecraft:/data"
+        environment:
+            EULA: "TRUE"
         restart: always
 
