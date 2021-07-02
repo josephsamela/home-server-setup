@@ -12,6 +12,7 @@ services:
         environment:
             - NGINX_HOST=samela.io
             - NGINX_PORT=80
+        restart: always
 
     plex:
         image: plexinc/pms-docker:plexpass
@@ -43,6 +44,7 @@ services:
             - ".pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
         cap_add:
             - NET_ADMIN
+        restart: unless-stopped
 
     rtltcp:
         container_name: rtltcp
@@ -103,6 +105,7 @@ services:
         environment:
             - NGINX_HOST=samela.io
             - NGINX_PORT=80
+        restart: always
 
     homeassistant:
         container_name: homeassistant
