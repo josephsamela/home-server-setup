@@ -116,3 +116,12 @@ services:
         restart: unless-stopped
         network_mode: host
 
+    beehive-weight-data-bridge:
+        container_name: beehive-weight-data-bridge
+        image: beehive-weight-data-bridge
+        ports:
+            - "8075:8075"
+        volumes:
+            - ./beehive-weight-data-bridge:/usr/src/app
+        restart: unless-stopped
+
