@@ -56,7 +56,7 @@ services:
             - ".pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
         cap_add:
             - NET_ADMIN
-        restart: unless-stopped
+        restart: always
 
     rtltcp:
         container_name: rtltcp
@@ -135,5 +135,31 @@ services:
             - "8075:8075"
         volumes:
             - ./beehive-weight-data-bridge:/usr/src/app
+        restart: unless-stopped
+
+    weatherstation_influxdb:
+        container_name: weatherstation_influxdb
+        image: influxdb
+        network_mode: "host"
+        ports:
+            - "8086:8086"
+        environment:
+            - DOCKER_INFLUXDB_INIT_USERNAME=josephsamela
+            - DOCKER_INFLUXDB_INIT_PASSWORD=password
+            - DOCKER_INFLUXDB_ORG=samela.io
+            - DOCKER_INFLUXDB_BUCKET=weatherstation
+        restart: unless-stopped
+
+    weatherstation_rtl_433:
+        container_name: weatherstation_rtl_433
+        image: hertzg/rtl_433:latest
+        ports:
+            - "7560:7560"
+        devices:
+            - /dev/bus/usb/003
+        command:
+            - "-Finflux://weatherstation_influxdb:8086/api/v2/write?org=samela.io&bucket=weatherstation,token=8Ab-YH8MKDhPQjTazrKzit3hZ6PGTaK8-K5d3-N6o3qvCgZN79lZIODkwEYrN79OAUJVpOgYI8U5ZD0CweKUkQ=="
+        depends_on:
+            - "weatherstation_influxdb"
         restart: unless-stopped
 
