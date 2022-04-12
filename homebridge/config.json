@@ -1,0 +1,76 @@
+{
+    "bridge": {
+        "name": "Homebridge 485C",
+        "username": "0E:62:E6:D5:48:5C",
+        "port": 51860,
+        "pin": "031-45-154"
+    },
+    "accessories": [
+        {
+            "accessory": "GarageDoorOpener",
+            "name": "Garage Door",
+            "apiroute": "http://192.168.1.15",
+            "openTime": 13,
+            "closeTime": 13,
+            "autoLock": false,
+            "autoLockDelay": 20,
+            "pollInterval": 120,
+            "timeout": 2000,
+            "http_method": "GET"
+        },
+        {
+            "name": "Pihole",
+            "auth": "7f71df25b6b61663e5a3aa29e961fa245038a18ee29e47bf9c2ad5ae3ce0ecb6",
+            "ssl": false,
+            "rejectUnauthorized": false,
+            "host": "192.168.1.5",
+            "port": 8080,
+            "baseDirectory": "/admin/",
+            "time": 0,
+            "reversed": false,
+            "logLevel": 1,
+            "accessory": "Pihole"
+        },
+        {
+            "accessory": "AdvancedHttpTemperatureHumidity",
+            "name": "Weather Station",
+            "url": "http://192.168.1.5:8084/data"
+        },
+        {
+            "accessory": "WebSprinklers",
+            "name": "Irrigation",
+            "apiroute": "http://192.168.1.16",
+            "disableScheduling": true,
+            "zones": 1
+        }
+    ],
+    "platforms": [
+        {
+            "name": "Config",
+            "port": 8581,
+            "platform": "config"
+        },
+        {
+            "name": "Camera FFmpeg",
+            "cameras": [
+                {
+                    "name": "Security Camera",
+                    "unbridge": true,
+                    "videoConfig": {
+                        "source": "-i rtsp://192.168.1.25:554/live",
+                        "maxWidth": 1920,
+                        "maxHeight": 1080,
+                        "audio": false
+                    }
+                }
+            ],
+            "platform": "Camera-ffmpeg"
+        }
+    ],
+    "disabledPlugins": [
+        "homebridge-dummy",
+        "homebridge-rtl",
+        "homebridge-http-thermometer",
+        "homebridge-advanced-http-temperature-humidity"
+    ]
+}

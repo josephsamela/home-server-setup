@@ -1,0 +1,42 @@
+[server]
+port = 8080
+data_dir = "/app/data/"
+
+[tokens]
+youtube = "AIzaSyDh1X7u4Sm77dyg5O1Fu0r-7SqCPX9WoKY"
+
+[feeds]
+
+    [feeds.LTT]
+	title = "WAN Show"
+	url = "https://www.youtube.com/channel/UCXuqSBlHAE6Xw-yeJA0Tunw"
+	opml = true
+	page_size = 12
+	update_period = "12h"
+	quality = "high"
+	format = "video"
+	max_height = 720
+	clean = { keep_last = 10 }
+	filters = { title = "WAN Show" }
+
+    [feeds.GCN]
+	title = "GCN Show"
+	url = "https://www.youtube.com/channel/UCuTaETsuCOkJ0H_GAztWt0Q"
+	opml = true
+	page_size = 12
+	update_period = "12h"
+	quality = "high"
+	format = "video"
+	max_height = 720
+	clean = { keep_last = 10 }
+	filters = { title = "GCN Show" }
+
+[downloader]
+self_update = true
+timeout = 15
+
+[log]
+filename = "podsync.log"
+max_size = 50
+max_age = 30
+max_backups = 7
