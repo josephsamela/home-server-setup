@@ -7,18 +7,6 @@
     },
     "accessories": [
         {
-            "accessory": "GarageDoorOpener",
-            "name": "Garage Door",
-            "apiroute": "http://192.168.1.15",
-            "openTime": 13,
-            "closeTime": 13,
-            "autoLock": false,
-            "autoLockDelay": 20,
-            "pollInterval": 120,
-            "timeout": 2000,
-            "http_method": "GET"
-        },
-        {
             "name": "Pihole",
             "auth": "7f71df25b6b61663e5a3aa29e961fa245038a18ee29e47bf9c2ad5ae3ce0ecb6",
             "ssl": false,
@@ -37,29 +25,97 @@
             "url": "http://192.168.1.5:8084/data"
         },
         {
-            "accessory": "WebSprinklers",
-            "name": "Irrigation",
-            "apiroute": "http://192.168.1.16",
-            "disableScheduling": true,
-            "zones": 1
+            "accessory": "GarageDoorOpener",
+            "name": "Garage Door",
+            "apiroute": "http://192.168.1.15",
+            "openTime": 15,
+            "closeTime": 15,
+            "autoLock": false,
+            "autoLockDelay": 20,
+            "pollInterval": 15,
+            "timeout": 5000,
+            "http_method": "GET"
         }
     ],
     "platforms": [
         {
             "name": "Config",
             "port": 8581,
+            "auth": "form",
+            "theme": "auto",
+            "tempUnits": "f",
+            "lang": "auto",
             "platform": "config"
         },
         {
             "name": "Camera FFmpeg",
             "cameras": [
                 {
-                    "name": "Security Camera",
+                    "name": "Workshop Printer",
+                    "manufacturer": "Creality",
+                    "model": "Ender 3",
+                    "doorbell": false,
+                    "switches": false,
                     "unbridge": true,
                     "videoConfig": {
-                        "source": "-i rtsp://192.168.1.25:554/live",
-                        "maxWidth": 1920,
-                        "maxHeight": 1080,
+                        "source": "-i http://octoprint/webcam/?action=stream",
+                        "maxWidth": 1280,
+                        "maxHeight": 720,
+                        "maxFPS": 24,
+                        "maxBitrate": 3000,
+                        "forceMax": true,
+                        "vcodec": "libx264",
+                        "audio": false
+                    }
+                },
+                {
+                    "name": "Security Camera, Garage",
+                    "manufacturer": "Espressif",
+                    "model": "ESP32-CAM",
+                    "unbridge": true,
+                    "videoConfig": {
+                        "source": "-re -f mjpeg -i http://192.168.1.35/1280x720.mjpeg",
+                        "stillImageSource": "-i http://192.168.1.35/1280x720.jpg",
+                        "maxWidth": 1280,
+                        "maxHeight": 720,
+                        "maxFPS": 24,
+                        "maxBitrate": 3000,
+                        "forceMax": true,
+                        "vcodec": "libx264",
+                        "audio": false
+                    }
+                },
+                {
+                    "name": "Security Camera, Workshop",
+                    "manufacturer": "Espressif",
+                    "model": "ESP32-CAM",
+                    "unbridge": true,
+                    "videoConfig": {
+                        "source": "-re -f mjpeg -i http://192.168.1.36/1280x720.mjpeg",
+                        "stillImageSource": "-i http://192.168.1.36/1280x720.jpg",
+                        "maxWidth": 1280,
+                        "maxHeight": 720,
+                        "maxFPS": 24,
+                        "maxBitrate": 3000,
+                        "forceMax": true,
+                        "vcodec": "libx264",
+                        "audio": false
+                    }
+                },
+                {
+                    "name": "Security Camera, Office",
+                    "manufacturer": "Google",
+                    "model": "Google Pixel",
+                    "unbridge": true,
+                    "videoConfig": {
+                        "source": "-re -f mjpeg -i http://192.168.1.38:8080/video",
+                        "stillImageSource": "-i http://192.168.1.38:8080/photo.jpg",
+                        "maxWidth": 3840,
+                        "maxHeight": 2160,
+                        "maxFPS": 30,
+                        "maxBitrate": 10000,
+                        "forceMax": true,
+                        "vcodec": "libx264",
                         "audio": false
                     }
                 }
@@ -69,8 +125,6 @@
     ],
     "disabledPlugins": [
         "homebridge-dummy",
-        "homebridge-rtl",
-        "homebridge-http-thermometer",
         "homebridge-advanced-http-temperature-humidity"
     ]
 }

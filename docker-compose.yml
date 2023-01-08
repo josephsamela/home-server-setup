@@ -156,9 +156,9 @@ services:
         ports:
             - "7560:7560"
         devices:
-            - /dev/bus/usb/001
+            - /dev/bus/usb/003
         command:
-            - "-Finflux://weatherstation_influxdb:8086/api/v2/write?org=samela.io&bucket=weatherstation,token=8Ab-YH8MKDhPQjTazrKzit3hZ6PGTaK8-K5d3-N6o3qvCgZN79lZIODkwEYrN79OAUJVpOgYI8U5ZD0CweKUkQ=="
+            - "-Finflux://dipper:8086/api/v2/write?org=samela.io&bucket=weatherstation,token=8Ab-YH8MKDhPQjTazrKzit3hZ6PGTaK8-K5d3-N6o3qvCgZN79lZIODkwEYrN79OAUJVpOgYI8U5ZD0CweKUkQ=="
         depends_on:
             - "weatherstation_influxdb"
         restart: unless-stopped
@@ -212,4 +212,15 @@ services:
         volumes:
             - ./podsync/data:/app/data/
             - ./podsync/config.toml:/app/config.toml
+
+    pokedex-db:
+      image: mariadb
+      restart: always
+      environment:
+        MARIADB_USER: joe
+        MARIADB_PASSWORD: pass
+        MARIADB_ROOT_PASSWORD: admin
+      ports:
+        - 3306:3306
+
 

@@ -1,9 +1,10 @@
 [server]
 port = 8080
 data_dir = "/app/data/"
+hostname= "http://192.168.1.5:8089"
 
 [tokens]
-youtube = "AIzaSyDh1X7u4Sm77dyg5O1Fu0r-7SqCPX9WoKY"
+youtube = "AIzaSyAoFFqko15ewtSAh7DquWCfcJgc87x9HkA"
 
 [feeds]
 
@@ -11,25 +12,103 @@ youtube = "AIzaSyDh1X7u4Sm77dyg5O1Fu0r-7SqCPX9WoKY"
 	title = "WAN Show"
 	url = "https://www.youtube.com/channel/UCXuqSBlHAE6Xw-yeJA0Tunw"
 	opml = true
-	page_size = 12
-	update_period = "12h"
+	page_size = 50
+	update_period = "4h"
 	quality = "high"
 	format = "video"
 	max_height = 720
 	clean = { keep_last = 10 }
 	filters = { title = "WAN Show" }
+    cover_art_quality = "high"
 
     [feeds.GCN]
 	title = "GCN Show"
 	url = "https://www.youtube.com/channel/UCuTaETsuCOkJ0H_GAztWt0Q"
 	opml = true
-	page_size = 12
+	page_size = 50
 	update_period = "12h"
 	quality = "high"
 	format = "video"
 	max_height = 720
 	clean = { keep_last = 10 }
 	filters = { title = "GCN Show" }
+    cover_art_quality = "high"
+
+    [feeds.TJM]
+	title = "They're Just Movies"
+	url = "https://www.youtube.com/channel/UCt-oJR5teQIjOAxCmIQvcgA"
+	opml = true
+	page_size = 50
+	update_period = "12h"
+	quality = "high"
+	format = "video"
+	max_height = 720
+	clean = { keep_last = 10 }
+    cover_art_quality = "high"
+
+    [feeds.GLHF]
+	title = "Good Luck High Five"
+	url = "https://www.youtube.com/channel/UC3xWgtukXNLwPDdJvR_YcEg"
+	opml = true
+	page_size = 50
+	update_period = "12h"
+	quality = "high"
+	format = "video"
+	max_height = 720
+	clean = { keep_last = 10 }
+    cover_art_quality = "high"
+
+    [feeds.L1News]
+	title = "Level1 News"
+	url = "https://www.youtube.com/channel/UC4w1YQAJMWOz4qtxinq55LQ"
+	opml = true
+	page_size = 14
+	update_period = "12h"
+	quality = "high"
+	format = "video"
+	max_height = 720
+	clean = { keep_last = 10 }
+	filters = { title = "Level1 News" }
+    cover_art_quality = "high"
+
+    [feeds.makerupdate]
+	title = "Maker Update"
+	url = "https://www.youtube.com/channel/UCclJCqMDAkyVGsm5oFOTXIQ"
+	opml = true
+	page_size = 50
+	update_period = "12h"
+	quality = "high"
+	format = "video"
+	max_height = 720
+	clean = { keep_last = 10 }
+	filters = { title = "Maker Update" }
+    cover_art_quality = "high"
+
+    [feeds.talkingheads]
+	title = "Talking Heads"
+	url = "https://www.youtube.com/channel/UCp3yVOm6A55nx65STpm3tXQ"
+	opml = true
+	page_size = 50
+	update_period = "12h"
+	quality = "high"
+	format = "video"
+	max_height = 720
+	clean = { keep_last = 10 }
+	filters = { title = "Talking Heads" }
+    cover_art_quality = "high"
+
+    [feeds.diestoremoval]
+	title = "Dies To Removal"
+	url = "https://www.youtube.com/channel/UC7-hR5EfgpM6oHfiGDkxfMA"
+	opml = true
+	page_size = 50
+	update_period = "12h"
+	quality = "high"
+	format = "video"
+	max_height = 720
+	clean = { keep_last = 10 }
+	filters = { title = "Dies To Removal" }
+    cover_art_quality = "high"
 
 [downloader]
 self_update = true
@@ -40,3 +119,4 @@ filename = "podsync.log"
 max_size = 50
 max_age = 30
 max_backups = 7
+
