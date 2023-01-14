@@ -1,30 +1,30 @@
 version: "3"
 
 services:
-    bastion:
-        image: nginx
-        container_name: bastion
-        volumes:
-            - ./bastion/:/etc/nginx/conf.d/
-            - ./bastion/certbot/conf:/etc/letsencrypt
-            - ./bastion/certbot/www:/var/www/certbot
-        ports:
-            - "80:80"
-            - "443:443"
-        environment:
-            - NGINX_HOST=samela.io
-            - NGINX_PORT=80
-        command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-        restart: always
+    # bastion:
+    #     image: nginx
+    #     container_name: bastion
+    #     volumes:
+    #         - ./bastion/:/etc/nginx/conf.d/
+    #         - ./bastion/certbot/conf:/etc/letsencrypt
+    #         - ./bastion/certbot/www:/var/www/certbot
+    #     ports:
+    #         - "80:80"
+    #         - "443:443"
+    #     environment:
+    #         - NGINX_HOST=samela.io
+    #         - NGINX_PORT=80
+    #     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    #     restart: always
 
-    certbot:
-        image: certbot/certbot
-        container_name: certbot
-        volumes:
-              - ./bastion/certbot/conf:/etc/letsencrypt
-              - ./bastion/certbot/www:/var/www/certbot
-        entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-        restart: always
+    # certbot:
+    #     image: certbot/certbot
+    #     container_name: certbot
+    #     volumes:
+    #           - ./bastion/certbot/conf:/etc/letsencrypt
+    #           - ./bastion/certbot/www:/var/www/certbot
+    #     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    #     restart: always
 
     plex:
         image: plexinc/pms-docker:plexpass
@@ -58,25 +58,16 @@ services:
             - NET_ADMIN
         restart: always
 
-#    rtltcp:
-#        container_name: rtltcp
-#        image: kosdk/rtl-tcp
-#        ports:
-#            - 1234:1234
-#        devices: 
-#            - /dev/bus/usb/003
-#        restart: always
-#
-#    samba:
-#        image: joebiellik/samba-server
-#        volumes:
-#            - ./smb.conf:/etc/samba/smb.conf
-#            - /share:/mnt/share
-#        ports:
-#            - "137:137/udp"
-#            - "138:138/udp"
-#            - "139:139/tcp"
-#            - "445:445/tcp"
+   samba:
+       image: joebiellik/samba-server
+       volumes:
+           - ./smb.conf:/etc/samba/smb.conf
+           - /share:/mnt/share
+       ports:
+           - "137:137/udp"
+           - "138:138/udp"
+           - "139:139/tcp"
+           - "445:445/tcp"
 
     transmission:
         image: ghcr.io/linuxserver/transmission
@@ -128,14 +119,14 @@ services:
 #        restart: unless-stopped
 #        network_mode: host
 
-    beehive-weight-data-bridge:
-        container_name: beehive-weight-data-bridge
-        image: beehive-weight-data-bridge
-        ports:
-            - "8075:8075"
-        volumes:
-            - ./beehive-weight-data-bridge:/usr/src/app
-        restart: unless-stopped
+    # beehive-weight-data-bridge:
+    #     container_name: beehive-weight-data-bridge
+    #     image: beehive-weight-data-bridge
+    #     ports:
+    #         - "8075:8075"
+    #     volumes:
+    #         - ./beehive-weight-data-bridge:/usr/src/app
+    #     restart: unless-stopped
 
     weatherstation_influxdb:
         container_name: weatherstation_influxdb
@@ -163,24 +154,14 @@ services:
             - "weatherstation_influxdb"
         restart: unless-stopped
 
-    automatic_ripping_machine:
-        container_name: automatic_ripping_machine
-        image: 1337server/automatic-ripping-machine:latest
-        privileged: true
-        ports: 
-            - "8083:8080"
-        environment:
-            - UID=1000
-            - GID=1000
-        devices:
-            - "/dev/sr0:/dev/sr0"
-        volumes:
-            - "/home/arm:/home/arm"
-            - "/home/arm/Music:/home/arm/Music"
-            - "/home/arm/config:/home/arm/config"
-            - "/home/arm/logs:/home/arm/logs"
-            - "/home/arm/media:/home/arm/media"
-        restart: unless-stopped
+#    rtltcp:
+#        container_name: rtltcp
+#        image: kosdk/rtl-tcp
+#        ports:
+#            - 1234:1234
+#        devices: 
+#            - /dev/bus/usb/003
+#        restart: always
 
     homebridge:
         image: oznu/homebridge:latest
@@ -203,24 +184,24 @@ services:
         ports:
             - 8084:5000
    
-    podsync:
-        image: tdeutsch/podsync:latest
-        container_name: podsync
-        restart: unless-stopped
-        ports:
-            - 8089:8080
-        volumes:
-            - ./podsync/data:/app/data/
-            - ./podsync/config.toml:/app/config.toml
+    # podsync:
+    #     image: tdeutsch/podsync:latest
+    #     container_name: podsync
+    #     restart: unless-stopped
+    #     ports:
+    #         - 8089:8080
+    #     volumes:
+    #         - ./podsync/data:/app/data/
+    #         - ./podsync/config.toml:/app/config.toml
 
-    pokedex-db:
-      image: mariadb
-      restart: always
-      environment:
-        MARIADB_USER: joe
-        MARIADB_PASSWORD: pass
-        MARIADB_ROOT_PASSWORD: admin
-      ports:
-        - 3306:3306
+    # pokedex-db:
+    #   image: mariadb
+    #   restart: always
+    #   environment:
+    #     MARIADB_USER: joe
+    #     MARIADB_PASSWORD: pass
+    #     MARIADB_ROOT_PASSWORD: admin
+    #   ports:
+    #     - 3306:3306
 
 
