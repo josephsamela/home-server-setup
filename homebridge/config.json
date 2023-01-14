@@ -7,24 +7,6 @@
     },
     "accessories": [
         {
-            "name": "Pihole",
-            "auth": "7f71df25b6b61663e5a3aa29e961fa245038a18ee29e47bf9c2ad5ae3ce0ecb6",
-            "ssl": false,
-            "rejectUnauthorized": false,
-            "host": "192.168.1.5",
-            "port": 8080,
-            "baseDirectory": "/admin/",
-            "time": 0,
-            "reversed": false,
-            "logLevel": 1,
-            "accessory": "Pihole"
-        },
-        {
-            "accessory": "AdvancedHttpTemperatureHumidity",
-            "name": "Weather Station",
-            "url": "http://192.168.1.5:8084/data"
-        },
-        {
             "accessory": "GarageDoorOpener",
             "name": "Garage Door",
             "apiroute": "http://192.168.1.15",
@@ -120,11 +102,12 @@
                     }
                 }
             ],
-            "platform": "Camera-ffmpeg"
+            "platform": "Camera-ffmpeg",
+            "_bridge": {
+                "username": "0E:FD:1C:A8:72:B4",
+                "port": 38751
+            }
         }
     ],
-    "disabledPlugins": [
-        "homebridge-dummy",
-        "homebridge-advanced-http-temperature-humidity"
-    ]
+    "disabledPlugins": []
 }

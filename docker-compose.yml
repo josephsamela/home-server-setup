@@ -37,14 +37,12 @@ services:
             - /dev/dri:/dev/dri
         volumes:
             - /share/Library:/data:rw
-        restart: always
+        restart: unless-stopped
 
     pihole:
         container_name: pihole
         image: pihole/pihole:latest
         restart: always
-        environment:
-            - TZ="America/Boston"
         ports:
             - "192.168.1.5:53:53/tcp"
             - "192.168.1.5:53:53/udp"
@@ -56,19 +54,34 @@ services:
             - "./pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/"
         cap_add:
             - NET_ADMIN
-        restart: always
+        restart: unless-stopped
 
     samba:
-       image: joebiellik/samba-server
-       container_name: samba-fileshare
-       volumes:
-           - ./smb.conf:/etc/samba/smb.conf
-           - /share:/mnt/share
-       ports:
-           - "137:137/udp"
-           - "138:138/udp"
-           - "139:139/tcp"
-           - "445:445/tcp"
+        image: joebiellik/samba-server
+        container_name: samba-fileshare
+        volumes:
+            - ./smb.conf:/etc/samba/smb.conf
+            - /share:/mnt/share
+        ports:
+            - "137:137/udp"
+            - "138:138/udp"
+            - "139:139/tcp"
+            - "445:445/tcp"
+
+    resilio-sync:
+        image: lscr.io/linuxserver/resilio-sync:latest
+        container_name: resilio-sync
+        environment:
+          - PUID=1000
+          - PGID=1000
+          - TZ=America/New York
+        volumes:
+          - ./resilio-sync/config:/config
+          - /share:/sync
+        ports:
+          - 8888:8888
+          - 55555:55555
+        restart: unless-stopped
 
     transmission:
         image: ghcr.io/linuxserver/transmission
@@ -109,17 +122,19 @@ services:
             - ./beehive-weight-data-bridge:/usr/src/app
         restart: unless-stopped
 
-    weatherstation_influxdb:
-        container_name: weatherstation_influxdb
+    influxdb:
+        container_name: influxdb
         image: influxdb
-        network_mode: "host"
+        volumes:
+          - ./influxdb/data:/var/lib/influxdb2
+          - ./influxdb/config:/etc/influxdb2
         ports:
             - "8086:8086"
         environment:
             - DOCKER_INFLUXDB_INIT_USERNAME=josephsamela
             - DOCKER_INFLUXDB_INIT_PASSWORD=password
             - DOCKER_INFLUXDB_ORG=samela.io
-            - DOCKER_INFLUXDB_BUCKET=weatherstation
+            - DOCKER_INFLUXDB_BUCKET=dipper
         restart: unless-stopped
 
     weatherstation_rtl_433:
@@ -130,9 +145,9 @@ services:
         devices:
             - /dev/bus/usb/003
         command:
-            - "-Finflux://dipper:8086/api/v2/write?org=samela.io&bucket=weatherstation,token=8Ab-YH8MKDhPQjTazrKzit3hZ6PGTaK8-K5d3-N6o3qvCgZN79lZIODkwEYrN79OAUJVpOgYI8U5ZD0CweKUkQ=="
+            - "-Finflux://dipper:8086/api/v2/write?org=samela.io&bucket=dipper,token=8Ab-YH8MKDhPQjTazrKzit3hZ6PGTaK8-K5d3-N6o3qvCgZN79lZIODkwEYrN79OAUJVpOgYI8U5ZD0CweKUkQ=="
         depends_on:
-            - "weatherstation_influxdb"
+            - "influxdb"
         restart: unless-stopped
 
 #    rtltcp:
