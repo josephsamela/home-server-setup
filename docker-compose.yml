@@ -60,6 +60,7 @@ services:
 
     samba:
        image: joebiellik/samba-server
+       container_name: samba-fileshare
        volumes:
            - ./smb.conf:/etc/samba/smb.conf
            - /share:/mnt/share
