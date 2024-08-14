@@ -183,114 +183,114 @@ services:
     homebridge-weather-station-api-relay:
         image: homebridge-weather-station-api-relay
         container_name: homebridge-weather-station-api-relay
-      ports:
+        ports:
           - 8084:5000
-      restart: unless-stopped
+        restart: unless-stopped
 
-  3cx:
-      image: ghcr.io/izer-xyz/3cx:latest
-      container_name: 3cx
-      restart: unless-stopped
-      tty: true
-      cgroup: host
-      tmpfs:
-          - /tmp/
-          - /run/
-          - /run/lock
-      volumes:
-          - ./3cx:/mnt/voip:rw
-          - /sys/fs/cgroup:/sys/fs/cgroup:rw
-      ports:
-          - "5015:5015"
-          - "5060:5060"
-          - "5060:5060/udp"
-          - "5090:5090"
-          - "5090:5090/udp"
+    3cx:
+        image: ghcr.io/izer-xyz/3cx:latest
+        container_name: 3cx
+        restart: unless-stopped
+        tty: true
+        cgroup: host
+        tmpfs:
+            - /tmp/
+            - /run/
+            - /run/lock
+        volumes:
+            - ./3cx:/mnt/voip:rw
+            - /sys/fs/cgroup:/sys/fs/cgroup:rw
+        ports:
+            - "5015:5015"
+            - "5060:5060"
+            - "5060:5060/udp"
+            - "5090:5090"
+            - "5090:5090/udp"
 
-  tftp:
-      image: 3x3cut0r/tftpd-hpa
-      container_name: tftp
-      environment:
-          TZ: America/Boston
-          CREATE: 1
-          VERBOSE: 1
-      volumes:
-          - ./tftp:/tftpboot
-      ports:
-          - 69:69/udp
-      restart: unless-stopped
+    tftp:
+        image: 3x3cut0r/tftpd-hpa
+        container_name: tftp
+        environment:
+        TZ: America/Boston
+        CREATE: 1
+        VERBOSE: 1
+        volumes:
+            - ./tftp:/tftpboot
+        ports:
+            - 69:69/udp
+        restart: unless-stopped
 
-  airprint:
-      image: chuckcharlie/cups-avahi-airprint:latest
-      container_name: airprint
-      network_mode: host
-      volumes:
-          - ./airprint/services:/services
-          - ./airprint/config:/config
-      environment:
-          CUPSADMIN: "admin"
-          CUPSPASSWORD: "password"
-      restart: unless-stopped
+    airprint:
+        image: chuckcharlie/cups-avahi-airprint:latest
+        container_name: airprint
+        network_mode: host
+        volumes:
+            - ./airprint/services:/services
+            - ./airprint/config:/config
+        environment:
+            CUPSADMIN: "admin"
+            CUPSPASSWORD: "password"
+        restart: unless-stopped
 
-  audiobookshelf:
-      image: ghcr.io/advplyr/audiobookshelf
-      container_name: audiobookshelf
-      environment:
-          AUDIOBOOKSHELF_UID: 99
-          AUDIOBOOKSHELF_GID: 100
-      ports:
-          - 13378:80
-      volumes:
-          - /share/Library/Books/Audiobooks:/audiobooks
-          - ./audiobookshelf/config:/config
-          - ./audiobookshelf/metadata:/metadata
-      restart: unless-stopped
+    audiobookshelf:
+        image: ghcr.io/advplyr/audiobookshelf
+        container_name: audiobookshelf
+        environment:
+            AUDIOBOOKSHELF_UID: 99
+            AUDIOBOOKSHELF_GID: 100
+        ports:
+            - 13378:80
+        volumes:
+            - /share/Library/Books/Audiobooks:/audiobooks
+            - ./audiobookshelf/config:/config
+            - ./audiobookshelf/metadata:/metadata
+        restart: unless-stopped
 
-  zoneminder:
-      image:  zoneminderhq/zoneminder:latest-ubuntu18.04
-      container_name: zoneminder
-      volumes:
-          - ./zoneminder/events:/var/cache/zoneminder/events
-          - ./zoneminder/images:/var/cache/zoneminder/images
-          - ./zoneminder/mysql:/var/lib/mysql
-          - ./zoneminder/logs:/var/log/zm
-      ports:
-          - 1080:80
-      devices:
-          - /dev/dri:/dev/dri
-      restart: unless-stopped
+    zoneminder:
+        image:  zoneminderhq/zoneminder:latest-ubuntu18.04
+        container_name: zoneminder
+        volumes:
+            - ./zoneminder/events:/var/cache/zoneminder/events
+            - ./zoneminder/images:/var/cache/zoneminder/images
+            - ./zoneminder/mysql:/var/lib/mysql
+            - ./zoneminder/logs:/var/log/zm
+        ports:
+            - 1080:80
+        devices:
+            - /dev/dri:/dev/dri
+        restart: unless-stopped
 
-  shairport-sync:
-      image: mikebrady/shairport-sync:latest
-      container_name: shairport-sync
-      network_mode: host
-      restart: unless-stopped
-      devices:
-          - "/dev/snd"
-      volumes:
-          - ./shairport-sync/shairport-sync.conf:/etc/shairport-sync.conf
-          - /etc/asound.conf:/etc/asound.conf:ro
-          - /usr/lib/arm-linux-gnueabihf/alsa-lib:/usr/lib/arm-linux-gnueabihf/alsa-lib:ro
-          - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+    shairport-sync:
+        image: mikebrady/shairport-sync:latest
+        container_name: shairport-sync
+        network_mode: host
+        restart: unless-stopped
+        devices:
+            - "/dev/snd"
+        volumes:
+            - ./shairport-sync/shairport-sync.conf:/etc/shairport-sync.conf
+            - /etc/asound.conf:/etc/asound.conf:ro
+            - /usr/lib/arm-linux-gnueabihf/alsa-lib:/usr/lib/arm-linux-gnueabihf/alsa-lib:ro
+            - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
 
-  homeassistant:
-      image: ghcr.io/home-assistant/home-assistant:stable
-      container_name: homeassistant
-      volumes:
-          - ./homeassistant/config:/config
-      environment:
-          TZ: America/New_York
-      ports:
-          - 8123:8123
-      restart: unless-stopped
+    homeassistant:
+        image: ghcr.io/home-assistant/home-assistant:stable
+        container_name: homeassistant
+        volumes:
+            - ./homeassistant/config:/config
+        environment:
+            TZ: America/New_York
+        ports:
+            - 8123:8123
+        restart: unless-stopped
 
-  musicbot:
-      image: musicbot
-      container_name: musicbot
-      build:
-          context: ../discord-musicbot-docker
-          dockerfile: ../discord-musicbot-docker/Dockerfile
-      restart: unless-stopped
+    musicbot:
+        image: musicbot
+        container_name: musicbot
+        build:
+            context: ../discord-musicbot-docker
+            dockerfile: ../discord-musicbot-docker/Dockerfile
+        restart: unless-stopped
 
 secrets:
     samba_password:
