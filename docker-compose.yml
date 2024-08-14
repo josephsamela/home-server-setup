@@ -285,11 +285,11 @@ services:
         restart: unless-stopped
 
     musicbot:
-        image: musicbot
         container_name: musicbot
         build:
             context: ../discord-musicbot-docker
             dockerfile: ../discord-musicbot-docker/Dockerfile
+            no_cache: true
         restart: unless-stopped
 
 secrets:
