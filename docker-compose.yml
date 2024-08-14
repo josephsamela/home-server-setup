@@ -211,9 +211,9 @@ services:
         image: 3x3cut0r/tftpd-hpa
         container_name: tftp
         environment:
-        TZ: America/Boston
-        CREATE: 1
-        VERBOSE: 1
+          TZ: America/Boston
+          CREATE: 1
+          VERBOSE: 1
         volumes:
             - ./tftp:/tftpboot
         ports:
