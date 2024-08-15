@@ -221,7 +221,7 @@ services:
         restart: unless-stopped
 
     airprint:
-        image: chuckcharlie/cups-avahi-airprint:latest
+        image: chuckcharlie/cups-avahi-airprint
         container_name: airprint
         network_mode: host
         volumes:
