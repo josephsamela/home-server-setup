@@ -220,6 +220,15 @@ services:
             - 69:69/udp
         restart: unless-stopped
 
+    ntp:
+      image: dockurr/chrony
+      container_name: ntp
+      environment:
+        NTP_SERVERS: "pool.ntp.org"
+      ports:
+        - 123:123/udp
+      restart: unless-stopped
+
     airprint:
         image: chuckcharlie/cups-avahi-airprint
         container_name: airprint

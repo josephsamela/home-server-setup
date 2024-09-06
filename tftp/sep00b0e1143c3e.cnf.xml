@@ -8,8 +8,8 @@
             <timeZone>Eastern Standard/Daylight Time</timeZone>
             <ntps>
                 <ntp>
-                    <name>204.2.134.162</name>
-                    <ntpMode>Unicast</ntpMode>
+                    <name>192.168.1.5</name>
+                    <ntpMode>unicast</ntpMode>
                 </ntp>
             </ntps>
         </dateTimeSetting>
