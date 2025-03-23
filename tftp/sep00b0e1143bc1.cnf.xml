@@ -97,7 +97,7 @@
                 <featureLabel>(203) 936-8463 </featureLabel>
                 <proxy>USECALLMANAGER</proxy>
                 <port>5060</port>
-                <name>12</name>
+                <name>11</name>
                 <displayName>Office </displayName>
                 <autoAnswer>
                     <autoAnswerEnabled>2</autoAnswerEnabled>
@@ -110,7 +110,7 @@
                 <messagesNumber>99</messagesNumber>
                 <ringSettingIdle>4</ringSettingIdle>
                 <ringSettingActive>5</ringSettingActive>
-                <contact>12</contact>
+                <contact>11</contact>
                 <forwardCallInfoDisplay>
                     <callerName>true</callerName>
                     <callerNumber>false</callerNumber>
@@ -120,13 +120,13 @@
             </line>
             <line button="3">
                 <featureID>2</featureID>
-                <featureLabel>Kitchen - 11</featureLabel>
-                <speedDialNumber>11</speedDialNumber>
+                <featureLabel>Downstairs</featureLabel>
+                <speedDialNumber>02</speedDialNumber>
             </line>
             <line button="4">
                 <featureID>2</featureID>
-                <featureLabel>Workshop - 14</featureLabel>
-                <speedDialNumber>14</speedDialNumber>
+                <featureLabel>Basement</featureLabel>
+                <speedDialNumber>03</speedDialNumber>
             </line>
         </sipLines>
         <voipControlPort>5060</voipControlPort>

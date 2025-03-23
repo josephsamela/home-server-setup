@@ -2,4 +2,6 @@ pihole/*
 homebridge/*
 influxdb/*
 resilio-sync/*
+airprint/*
+secrets/
 

@@ -116,7 +116,20 @@ services:
         environment:
             NGINX_HOST: samela.io
             NGINX_PORT: 80
-        restart: always
+        restart: unless-stopped
+
+    quaboag-maple-co:
+        image: nginx:latest
+        container_name: quaboag-maple-co
+        volumes:
+            - /home/josephsamela/projects/quaboag-maple-co/docs:/data
+            - ./quaboag-maple-co/:/etc/nginx/conf.d/
+        ports:
+            - "228:80"
+        environment:
+            NGINX_HOST: samela.io
+            NGINX_PORT: 80
+        restart: unless-stopped
 
     beehive-weight-data-bridge:
         container_name: beehive-weight-data-bridge
@@ -179,6 +192,11 @@ services:
             HOMEBRIDGE_CONFIG_UI_PORT: 8581
         volumes:
             - ./homebridge:/homebridge
+        logging:
+            driver: json-file
+            options:
+                max-size: '10m'
+                max-file: "1"
 
     homebridge-weather-station-api-relay:
         image: homebridge-weather-station-api-relay
@@ -251,6 +269,7 @@ services:
             - 13378:80
         volumes:
             - /share/Library/Books/Audiobooks:/audiobooks
+            - ./audiobookshelf/podcasts:/podcasts
             - ./audiobookshelf/config:/config
             - ./audiobookshelf/metadata:/metadata
         restart: unless-stopped
@@ -287,6 +306,7 @@ services:
         container_name: homeassistant
         volumes:
             - ./homeassistant/config:/config
+            - ./homeassistant/custom_components:/custom_components
         environment:
             TZ: America/New_York
         ports:
@@ -300,6 +320,29 @@ services:
             dockerfile: ../discord-musicbot-docker/Dockerfile
             no_cache: true
         restart: unless-stopped
+
+    pinchflat:
+      container_name: pinchflat
+      image: ghcr.io/kieraneglin/pinchflat:latest
+      environment:
+        # Set the timezone to your local timezone
+        - TZ=America/New_York
+      ports:
+        - '8945:8945'
+      volumes:
+        - ./pinchflat/config:/config
+        - ./pinchflat/downloads:/downloads
+      restart: unless-stopped
+
+    loadstone:
+      container_name: loadstone
+      image: ghcr.io/lodestone-team/lodestone_core
+      ports:
+        - 16662:16662
+        - 25565:25565
+      volumes:
+        - ./loadstone:/home/user/.loadstone
+      restart: unless-stopped
 
 secrets:
     samba_password:
